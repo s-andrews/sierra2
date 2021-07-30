@@ -14,7 +14,6 @@
     "samples" : [
         {
             "name": "User provided name",
-            "material": "RNA/DNA/Cells etc",
             "status" : "qc text",
             "annotation" : {
                 "concentration": 12.5,

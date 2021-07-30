@@ -1,0 +1,12 @@
+/* Submissions */
+
+/* We hide submission details by default */
+.submissiondetails {
+    display: none;
+}
+
+/* We hide biosamples by default */
+.biosamples {
+    display: none;
+}
+
