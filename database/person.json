@@ -1,0 +1,16 @@
+{
+    "_id": "automatically assigned",
+    "first_name": "simon",
+    "last_name": "andrews",
+    "email": "simon.andrews@babraham.ac.uk",
+    "admin": true,
+    "password": "hashedpassword",
+    "sessioncode": "usedwhenloggingin",
+    "reset_code": "codeforresetting",
+    "delegates_rw": [
+        "felix@babraham.ac.uk","jo@babraham.ac.uk"
+    ],
+    "delegates_ro" : [
+        "anne@babraham.ac.uk"
+    ]
+}

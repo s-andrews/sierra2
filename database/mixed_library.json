@@ -1,0 +1,12 @@
+{
+    "_id": "automatically assigned",
+    "status": "some qc text",
+    "libraries" : [
+        {
+            "submission": "id_from_submission",
+            "sample": 3,
+            "library": 2,
+            "barcode": "copied from library"
+        }
+    ]
+}

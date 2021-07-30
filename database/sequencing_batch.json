@@ -1,0 +1,15 @@
+{
+    "sequencer" : "could be id or provider",
+    "reference" : "flowcell id or external ref",
+    "date_sent" : "2021-09-30",
+    "libraries" : [
+        {
+            "id": "copied from mixed library",
+            "external id": "blank or from provider"
+            
+        }
+    ],
+    "data folders" : [
+        "run_folder1", "run_folder2"
+    ]
+}
