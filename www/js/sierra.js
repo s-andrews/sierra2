@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    $("#logindiv").modal("show")
     set_up_submissions()
 });
 
