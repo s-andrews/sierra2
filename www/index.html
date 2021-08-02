@@ -15,15 +15,15 @@
 
     <!-- Login Window -->
     <div id="logindiv" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h2 class="modal-title">Log In</h2>
               <img class="float-end" src="images/sierra_logo.png">
             </div>
             <div class="modal-body">
-                <label for="username">Username</label>
-                <input class="form-control" type="text" id="username">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" id="email">
                 <label for="Password">Password</label>
                 <input class="form-control" type="password" id="password">
                 <button id="login" type="button" class="form-control btn btn-primary mt-2">Log In</button>
@@ -36,99 +36,127 @@
           </div>
         </div>
       </div>
-      
+
+    <!-- New Account -->
+    <div id="newaccountdiv" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">New Account</h2>
+              <img class="float-end" src="images/sierra_logo.png">
+            </div>
+            <div class="modal-body">
+                <label for="new_name">Name</label>
+                <input class="form-control" type="text" id="new_name" placeholder="Jane Doe">
+                <label for="new_name">Email</label>
+                <input class="form-control" type="text" id="new_email" placeholder="jane.doe@example.com">
+                <label for="Password">Password</label>
+                <input class="form-control" type="password" id="new_password">
+                <label for="Password">Verify Password</label>
+                <input class="form-control" type="password" id="new_password2">
+                <button id="createaccountsubmit" type="button" class="form-control btn btn-primary mt-2">Create Account</button>
+
+                <p>
+                    <a href="#" class="float-end" id="forgotpassword">Forgot Password?</a>
+                    <a href="#" class="float-start" id="createaccount">Create Account</a>
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="images/sierra_logo.png"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="nav-link active" id="navsubmissions" aria-current="page" href="#">Submissions</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" id="navnewsubmission" href="#">New Submission</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" id="navaccount" href="#">Account Settings</a>
-                </li>
+    <div id="maincontent">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><img src="images/sierra_logo.png"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" id="navsubmissions" aria-current="page" href="#">Submissions</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="navnewsubmission" href="#">New Submission</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" id="navaccount" href="#">Account Settings</a>
+                    </li>
 
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            </div>
-        </div>
-    </nav>
-
-
-    <!-- Submissions -->
-    <div id="submissions" class="container-fluid">
-        <div class="card mb-2 mx-5">
-            <div class="card-body">
-                <h4 class="card-title">Early Development RNA-Seq <span class="float-end">Complete</span></h4>
-                <h6 class="card-title ms-2">Details <a href="#" class="showsubmissiondetails">Show></a></h6>
-                <ul class="submissiondetails">
-                    <li>Submitted by: Simon Andrews</li>
-                    <li>Submission date: 24 Jun 2020</li>
-                    <li>Received date: 25 Jun 2020</li>
-                    <li>Completed date: 6 July 2020</li> 
-                    <li>Submission type: Directional RNA-Seq</li>
                 </ul>
-                <h6 class="card-title ms-2">BioSamples <span class="badge bg-secondary">5</span> <a href="#" class="showbiosamples">Show></a></h6>
-                <div class="biosamples">
-                  <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Results</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>WT-1</td>
-                            <td>Pass Library QC</td>
-                            <td>Waiting</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>WT-2</td>
-                            <td>Pass Library QC</td>
-                            <td>Waiting</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>KO-1</td>
-                            <td>Pass Library QC</td>
-                            <td>Waiting</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>KO-2</td>
-                            <td>Pass Library QC</td>
-                            <td>Waiting</td>
-                        </tr>
-                    </tbody>
-                  </table>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
                 </div>
-                <div class="submissionbuttons float-end">
-                  <button type="button" class="btn btn-sm btn-primary">Edit</button>                  
-                  <button type="button" class="btn btn-sm btn-primary">Results</button>
+            </div>
+        </nav>
+
+
+        <!-- Submissions -->
+        <div id="submissions" class="container-fluid">
+            <div class="card mb-2 mx-5">
+                <div class="card-body">
+                    <h4 class="card-title">Early Development RNA-Seq <span class="float-end">Complete</span></h4>
+                    <h6 class="card-title ms-2">Details <a href="#" class="showsubmissiondetails">Show></a></h6>
+                    <ul class="submissiondetails">
+                        <li>Submitted by: Simon Andrews</li>
+                        <li>Submission date: 24 Jun 2020</li>
+                        <li>Received date: 25 Jun 2020</li>
+                        <li>Completed date: 6 July 2020</li> 
+                        <li>Submission type: Directional RNA-Seq</li>
+                    </ul>
+                    <h6 class="card-title ms-2">BioSamples <span class="badge bg-secondary">5</span> <a href="#" class="showbiosamples">Show></a></h6>
+                    <div class="biosamples">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Results</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>WT-1</td>
+                                <td>Pass Library QC</td>
+                                <td>Waiting</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>WT-2</td>
+                                <td>Pass Library QC</td>
+                                <td>Waiting</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>KO-1</td>
+                                <td>Pass Library QC</td>
+                                <td>Waiting</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>KO-2</td>
+                                <td>Pass Library QC</td>
+                                <td>Waiting</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="submissionbuttons float-end">
+                    <button type="button" class="btn btn-sm btn-primary">Edit</button>                  
+                    <button type="button" class="btn btn-sm btn-primary">Results</button>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-
 
 
 
@@ -142,5 +170,6 @@
 
     <!-- Our custom JS -->
     <script src="js/sierra.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

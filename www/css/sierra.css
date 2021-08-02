@@ -1,5 +1,11 @@
 /* Submissions */
 
+/* We hide all of the main content until they've logged in */
+#maincontent {
+    display: none;
+}
+
+
 /* We hide submission details by default */
 .submissiondetails {
     display: none;

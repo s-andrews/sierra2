@@ -1,5 +1,6 @@
+const backend = "/cgi-bin/sierra.py"
+
 $( document ).ready(function() {
-    $("#logindiv").modal("show")
     set_up_submissions()
 });
 
