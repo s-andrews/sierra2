@@ -5,7 +5,9 @@ import bcrypt
 import string
 import sys
 import random
+import sys
 import cgi
+import configuration
 import cgitb
 #cgitb.enable()
 
@@ -34,6 +36,32 @@ def dispatch_action(action,form):
         process_login("", "",form["session_id"].value)
     elif action=="new_account":
         new_account(form["name"].value,form["email"].value,form["password"].value)
+    elif action == "prep_types":
+        list_prep_types()
+    elif action == "samplesheet":
+        download_sample_sheet(form["type"].value)
+
+
+def download_sample_sheet(type):
+    # Check this is a valid type
+    if not type in configuration.library_prep_type_names():
+        send_error("Couldn't find sample sheet for "+type)
+
+    # Find the correct xlsx file for this type and return it
+    path = configuration.get_submission_file_for_type(type)
+    with open(path,"rb") as fh:
+        print("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        print(f"Content-Disposition: attachment; filename='{path.name}'\n")
+        sys.stdout.flush()
+        sys.stdout.buffer.write(fh.read())
+    
+    sys.stdout.flush()
+    
+
+
+def list_prep_types():
+    print("Content-type: text/json\n")
+    print(json.dumps(configuration.library_prep_type_names()))
 
 
 def send_error(message):

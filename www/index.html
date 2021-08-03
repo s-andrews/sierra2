@@ -68,6 +68,32 @@
       </div>
 
 
+    <!-- New Submission -->
+    <div id="newsubmissiondiv" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">New Submission</h3>
+              <img class="float-end" src="images/sierra_logo.png">
+            </div>
+            <div class="modal-body">
+                <h5>Download Sample Sheet</h5>
+                <select id="sample_sheet_type" class="form-control">
+                    <!-- Different sample sheet types inserted here -->
+                </select>
+                <button id="samplesheetdownload" type="button" class="form-control btn btn-primary mt-2">Download</button>
+
+                <h5 class="mt-4">Upload Sample Sheet</h5>
+                <input class="form-control" type="file" id="samplesheetfile">
+                <p id="newaccounterror" class="error_message text-center">Error Messages Go Here</p>
+                <button id="samplesheetupload" type="button" class="form-control btn btn-primary mt-2">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
 
     <!-- Navbar -->
     <div id="maincontent">
@@ -100,7 +126,6 @@
                 </div>
             </div>
         </nav>
-
 
         <!-- Submissions -->
         <div id="submissions" class="container-fluid">
@@ -179,5 +204,6 @@
     <!-- Our custom JS -->
     <script src="js/sierra.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/submissions.js"></script>
   </body>
 </html>
