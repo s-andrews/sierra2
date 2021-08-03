@@ -37,6 +37,7 @@ function process_login() {
     $.ajax(
         {
             url: backend,
+            method: "POST",
             data: {
                 action: "login",
                 email: email,
