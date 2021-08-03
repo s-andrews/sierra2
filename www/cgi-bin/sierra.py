@@ -29,7 +29,9 @@ def main():
 def dispatch_action(action,form):
 
     if action == "login":
-        process_login(form["email"].value, form["password"].value)
+        process_login(form["email"].value, form["password"].value,"")
+    elif action == "session_login":
+        process_login("", "",form["session_id"].value)
     elif action=="new_account":
         new_account(form["name"].value,form["email"].value,form["password"].value)
 
@@ -59,14 +61,18 @@ def new_account(name,email,password):
         send_error("Account already exists")
 
     # We can go ahead and make the new account
+
+    # We'll make a rest code which they'll use to verify the account
+    reset_code = generate_code(8)
+
     person = {
         "name": name,
-        "email": "simon.andrews@babraham.ac.uk",
+        "email": email,
         "email_valid": True, # Eventually we'll make this false until they validate it
         "admin": False,
         "password": bcrypt.hashpw(password.encode("UTF-8"),bcrypt.gensalt()).decode("UTF-8"),
         "sessioncode": None,
-        "reset_code": None,
+        "reset_code": reset_code,
         "delegates_rw": [],
         "delegates_ro" : []
     }
@@ -89,27 +95,32 @@ def generate_code(length):
 
 
 
-def process_login(email,password):
+def process_login(email,password,sessioncode):
     # Get the document for this person.  We keep all
     # emails as lowercase internally.
-    person = people.find_one({"email": email.lower()})
+    if email:
+        person = people.find_one({"email": email.lower()})
+
+    else:
+        person = people.find_one({"sessioncode": sessioncode})
 
     # Throw an error if we can't find them
     if person is None:
-        raise ValueError("No user found")
+        send_error("Person not found")
 
     # Check their password
-    if not bcrypt.checkpw(password,person["password"]):
-        raise ValueError("Wrong password")
+    if email:
+        if not bcrypt.checkpw(password.encode("UTF-8"),person["password"].encode("UTF-8")):
+            send_error("Wrong password")
 
-    # Generate a session token 
-    sessioncode = generate_code(20)
+        # Generate a session token 
+        sessioncode = generate_code(20)
 
-    # Set the session value for this user
-    people.update_one({"email":email},{"$set":{"sessioncode",sessioncode}})
+        # Set the session value for this user
+        people.update_one({"email":email.lower()},{"$set":{"sessioncode":sessioncode}})
 
     # Return the new code
-    send_success(sessioncode)
+    send_success(person["email"]+"\t"+sessioncode)
 
 
 

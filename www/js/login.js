@@ -17,8 +17,41 @@ function show_login() {
 
     // TODO: Check to see if there's a valid session ID
     // we can use
-    $("#logindiv").modal("show")
 
+    var session_id = Cookies.get("sierra_session_id")
+    if (session_id) {
+        // Validate the ID
+
+        $.ajax(
+            {
+                url: backend,
+                method: "POST",
+                data: {
+                    action: "session_login",
+                    session_id: session_id,
+                },
+                success: function(session_string) {
+                    let sections = session_string.split("\t")
+                    if (sections.length < 2) {
+                        session_id = ""
+                        $("#logindiv").modal("show")
+                        return
+                    }
+                    var realname = sections[0]
+                    $("#maincontent").show()
+    
+                    // TODO: Get their list of submissions
+                },
+                error: function(message) {
+                    console.log("Existing session didn't validate")
+                    $("#logindiv").modal("show")
+                }
+            }
+        )
+    }
+    else {
+        $("#logindiv").modal("show")
+    }
 }
 
 // Dismisses the login modal and shows
@@ -44,14 +77,25 @@ function process_login() {
                 password: password
             },
             success: function(session_string) {
-                let sections = session.split("\t")
-                var session = sections[0]
-                let realname = sections[1] // TODO: Do something with this
-                // TODO: Set cookie
+                let sections = session_string.split("\t")
+                if (sections.length < 2) {
+                    $("#loginerror").html("Login Failed")
+                    $("#loginerror").show()
+                    return
+                }
+                $("#loginerror").hide()
+                var session = sections[1] // TODO: Do something with this
+                let realname = sections[0]
+
+                Cookies.set("sierra_session_id", session)
                 $("#logindiv").modal("hide")
-                $("#maindiv").modal("show")
+                $("#maincontent").show()
 
                 // TODO: Get their list of submissions
+            },
+            error: function(message) {
+                $("#loginerror").html("Login Failed")
+                $("#loginerror").show()
             }
         }
     )

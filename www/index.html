@@ -26,6 +26,7 @@
                 <input class="form-control" type="text" id="email">
                 <label for="Password">Password</label>
                 <input class="form-control" type="password" id="password">
+                <p id="loginerror" class="error_message text-center">Error Messages Go Here</p>
                 <button id="login" type="button" class="form-control btn btn-primary mt-2">Log In</button>
 
                 <p>
@@ -100,7 +101,7 @@
 
         <!-- Submissions -->
         <div id="submissions" class="container-fluid">
-            <div class="card mb-2 mx-5">
+            <div class="card mb-2 mt-2 mx-5">
                 <div class="card-body">
                     <h4 class="card-title">Early Development RNA-Seq <span class="float-end">Complete</span></h4>
                     <h6 class="card-title ms-2">Details <a href="#" class="showsubmissiondetails">Show></a></h6>
@@ -168,6 +169,9 @@
 
     <!-- JQuery which we're still using even if bootstrap doesn't need it any more -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- JSCookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script>
 
     <!-- Our custom JS -->
     <script src="js/sierra.js"></script>
