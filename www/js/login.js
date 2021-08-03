@@ -10,6 +10,9 @@ $( document ).ready(function() {
 
     // Action when they log in
     $("#login").click(process_login)
+
+    // Action to log out
+    $("#navlogout").click(logout)
 });
 
 
@@ -61,6 +64,15 @@ function show_new_account_form() {
     $("#newaccountdiv").modal("show")
 }
 
+// Log the user out
+function logout() {
+    session_id = ""
+    Cookies.remove("sierra_session_id")
+    $("#submissions").html("")
+    $("#maincontent").hide()
+    $("#logindiv").modal("show")
+}
+
 
 // Processes a new login
 function process_login() {
@@ -84,10 +96,10 @@ function process_login() {
                     return
                 }
                 $("#loginerror").hide()
-                var session = sections[1] // TODO: Do something with this
+                session_id = sections[1] // TODO: Do something with this
                 let realname = sections[0]
 
-                Cookies.set("sierra_session_id", session)
+                Cookies.set("sierra_session_id", session_id)
                 $("#logindiv").modal("hide")
                 $("#maincontent").show()
 
