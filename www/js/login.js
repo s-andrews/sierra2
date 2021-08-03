@@ -63,7 +63,7 @@ function create_account() {
     new_password = $("#new_password").val()
     new_password2 = $("#new_password").val()
 
-    // TODO: Check values are present
+    // Check values are present
     let error_message = ""
     if (!new_name) {
         error_message = "No name supplied"
@@ -78,7 +78,15 @@ function create_account() {
         error_message = "Passwords do not match"
     }
 
-    // TODO: Check email looks like an email
+    // Check password is suitably long
+    else if (password.length < 8) {
+        error_message = "Password must be at least 8 characters long"
+    }
+
+    // Check email looks vaguely like an email
+    else if (new_email.indexOf("@") < 1) {
+        error_message = "Email didn't look like an email address"
+    }
 
     if (error_message) {
         $("#newaccounterror").html(error_message)
@@ -92,6 +100,7 @@ function create_account() {
     $.ajax(
         {
             url: backend,
+            method: "POST",
             data: {
                 action: "new_account",
                 name: new_name,
