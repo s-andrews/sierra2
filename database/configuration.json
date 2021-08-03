@@ -1,0 +1,33 @@
+{
+   "library_preps" : [
+       {
+           "name": "Pre-mixed library",
+           "template": "Pre-mixed.xlsx",
+           "library_types": null
+        },
+        {
+            "name": "Directional RNA-Seq",
+            "template": "RNA-Seq.xlsx",
+            "library_types": ["rna-seq"]
+        },
+        {
+            "name": "10X multi-ome",
+            "template": "10x_multi.xlsx",
+            "library_types": ["10x-rna","10x-feature"]
+        }
+   ],
+
+   "library_types" : [
+       "rna-seq",
+       "chip-seq",
+       "10x-rna",
+       "10x-feature"
+   ],
+
+   "run_types" : [
+       "NovaSeq 150bp PE",
+       "HiSeq 100bp SE",
+       "HiSeq 100bp SE",
+       "MiSeq 200bp SE"
+   ]
+}
