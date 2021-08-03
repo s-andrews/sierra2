@@ -64,8 +64,30 @@ function create_account() {
     new_password2 = $("#new_password").val()
 
     // TODO: Check values are present
+    let error_message = ""
+    if (!new_name) {
+        error_message = "No name supplied"
+    }
+    else if (!new_email) {
+        error_message = "No email supplied"
+    }
+    else if (!new_password) {
+        error_message = "No password supplied"
+    }
+    else if (new_password != new_password2) {
+        error_message = "Passwords do not match"
+    }
+
     // TODO: Check email looks like an email
-    // TODO: Check passwords match
+
+    if (error_message) {
+        $("#newaccounterror").html(error_message)
+        $("#newaccounterror").show()
+        return
+    }
+
+    // Clear any previous errors
+    $("#newaccounterror").hide()
 
     $.ajax(
         {
@@ -77,10 +99,13 @@ function create_account() {
                 password: new_password
             },
             success: function() {
-                // TODO: Show a success message
+                console.log("Account created")
                 $("#newaccountdiv").modal("hide")
                 $("#logindiv").modal("show")
-
+            },
+            error: function(message) {
+                $("#newaccounterror").html(message)
+                $("#newaccounterror").show()
             }
         }
     )

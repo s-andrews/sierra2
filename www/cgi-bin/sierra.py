@@ -7,7 +7,7 @@ import sys
 import random
 import cgi
 import cgitb
-cgitb.enable()
+#cgitb.enable()
 
 def main():
 
@@ -64,7 +64,7 @@ def new_account(name,email,password):
         "email": "simon.andrews@babraham.ac.uk",
         "email_valid": True, # Eventually we'll make this false until they validate it
         "admin": False,
-        "password": bcrypt.hashpw(password,bcrypt.gensalt()),
+        "password": bcrypt.hashpw(password.encode("UTF-8"),bcrypt.gensalt()).decode("UTF-8"),
         "sessioncode": None,
         "reset_code": None,
         "delegates_rw": [],
@@ -75,7 +75,7 @@ def new_account(name,email,password):
     people.insert_one(person)
 
     # TODO: We send an email to make them confirm the account
-    send_success("")
+    send_success("Created User "+email)
 
     
 
@@ -121,13 +121,13 @@ def create_db_connection():
     people = db.people_collection
 
     global submissions 
-    people = db.submissions_collection
+    submissions = db.submissions_collection
 
     global libraries 
-    people = db.libraries_collection
+    libraries = db.libraries_collection
 
     global batches 
-    people = db.batches_collection
+    batches = db.batches_collection
 
 
 if __name__ == "__main__":
