@@ -3,6 +3,7 @@ $( document ).ready(function() {
 
     $("#navnewsubmission").click(show_new_submission)
     $("#samplesheetdownload").click(download_sample_sheet)
+    $("#samplesheetupload").click(upload_sample_sheet)
 });
 
 function download_sample_sheet() {
@@ -13,6 +14,46 @@ function download_sample_sheet() {
     // the window location to the appropriate GET URL on 
     // the back end and then letting the browser do its thing
     top.location.href=backend+"?action=samplesheet&type="+sample_sheet_type
+}
+
+function upload_sample_sheet() {
+    // This takes in a filled submission and sends it on to the 
+    // backend to create the submission, samples, libraries etc.
+
+    // Get the file from the upload field
+    samplesheet_file = $("#samplesheetfile")[0].files[0]
+
+    if (!samplesheet_file) {
+        $("#samplesheeterror").html("No sample sheet file selected")
+        $("#samplesheeterror").show()
+        return
+    }
+
+    $("#samplesheeterror").hide()
+
+    let data = new FormData()
+    data.append("action","new_submission")
+    data.append("session", session_id)
+    data.append("file", samplesheet_file)
+
+    $.ajax(
+        {
+            url: backend,
+            method: "POST",
+            processData: false,
+            contentType: false, 
+            data: data,
+            success: function(new_id) {
+                console.log("Inserted new submission "+new_id)
+                // TODO: Update the list of submissions
+                $("#newsubmissiondiv").modal("hide")
+            },
+            error: function(message) {
+                $("#samplesheeterror").html(message)
+                $("#samplesheeterror").show()
+            }
+        }
+    )
 }
 
 

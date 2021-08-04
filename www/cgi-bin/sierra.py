@@ -8,8 +8,9 @@ import random
 import sys
 import cgi
 import configuration
+import submission
 import cgitb
-#cgitb.enable()
+cgitb.enable()
 
 def main():
 
@@ -40,6 +41,30 @@ def dispatch_action(action,form):
         list_prep_types()
     elif action == "samplesheet":
         download_sample_sheet(form["type"].value)
+    elif action == "new_submission":
+        process_new_submission(form)
+
+
+def process_new_submission(form):
+    # We should be sent their session token
+    session = form["session"].value
+
+    # We can find their email from the session
+    person = people.find_one({"sessioncode": session})
+
+    if person is None:
+        send_error("Couldn't find session token")
+
+    if form["file"].filename is None:
+        send_error("No file to parse")
+    try:
+        new_submission = submission.parse_submission(form["file"].file,person["email"])
+        new_id = submissions.insert_one(new_submission).inserted_id
+        send_success(new_id)
+
+    except ValueError as v:
+        send_error("Failed to parse: "+v)
+
 
 
 def download_sample_sheet(type):
@@ -51,7 +76,7 @@ def download_sample_sheet(type):
     path = configuration.get_submission_file_for_type(type)
     with open(path,"rb") as fh:
         print("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        print(f"Content-Disposition: attachment; filename='{path.name}'\n")
+        print(f"Content-Disposition: attachment; filename={path.stem}\n")
         sys.stdout.flush()
         sys.stdout.buffer.write(fh.read())
     

@@ -16,6 +16,20 @@ def library_prep_type_names():
         names.append(x["name"])
     return names
 
+def library_type_names():
+    names = []
+    for x in read_configuration()["library_types"]:
+        names.append(x)
+    return names
+
+
+def run_type_names():
+    names = []
+    for x in read_configuration()["run_types"]:
+        names.append(x)
+    return names
+
+
 def get_submission_file_for_type(type):
     for c in read_configuration()["library_preps"]:
         if c["name"] == type:

@@ -1,3 +1,5 @@
+var session_id = "" // We need to declare this outside of a function to give it gloabl scope
+
 $( document ).ready(function() {
     // Show the login page initially
     show_login()
@@ -20,10 +22,13 @@ function show_login() {
 
     // TODO: Check to see if there's a valid session ID
     // we can use
+    console.log("Checking for existing login")
 
-    var session_id = Cookies.get("sierra_session_id")
+    session_id = Cookies.get("sierra_session_id")
     if (session_id) {
         // Validate the ID
+
+        console.log("Found "+session_id)
 
         $.ajax(
             {
