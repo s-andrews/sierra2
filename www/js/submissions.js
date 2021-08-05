@@ -1,6 +1,4 @@
 $( document ).ready(function() {
-    set_up_submissions()
-
     $("#navnewsubmission").click(show_new_submission)
     $("#samplesheetdownload").click(download_sample_sheet)
     $("#samplesheetupload").click(upload_sample_sheet)
@@ -14,6 +12,46 @@ function download_sample_sheet() {
     // the window location to the appropriate GET URL on 
     // the back end and then letting the browser do its thing
     top.location.href=backend+"?action=samplesheet&type="+sample_sheet_type
+}
+
+function populate_submissions (data) {
+    // This gets a list of submissions for the current user
+    // and fills out the submissions div.  It will replace
+    // whatever is in the div already
+
+    // The function can either be called with an undefined
+    // value which will kick off an ajax request to get the
+    // list of accessible submissions for the current user,
+    // or it can be called by the ajax callback, in which case
+    // data will be the json list of submissions.
+
+    if (typeof(data) === 'undefined') {
+        // We need to query for the submission data
+        $.ajax(
+            {
+                url: backend,
+                data: {
+                    action: "list_submissions",
+                    session: session_id
+                },
+                success: function(data) {
+                    populate_submissions(data)
+                },
+                error: function(message) {
+                    console.log("Failed to list submissions")
+                }
+            }
+        )
+        return
+    }
+
+    // We're putting out the new submissions
+    console.log("Adding "+data.length+"submissions to page")
+
+    //TODO: Add submissions
+
+    // We need to enable events on the newly added submissions
+    set_up_submissions()
 }
 
 function upload_sample_sheet() {

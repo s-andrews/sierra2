@@ -14,6 +14,60 @@ from datetime import datetime
 import warnings
 warnings.filterwarnings("ignore")
 
+def list_submissions(email,shared_emails,submission_collection):
+    # This gets the full set of submissions accessible to a single user
+    # This will encompass both their own submissions, but also any other
+    # submissions to which they have access, either via a user-level share
+    # or a specific sharing of an individual submission
+
+    # We want a full list of potential owners so we'll add the main email
+    # to the shared list too
+    shared_emails.append(email)
+
+    found_submissions = []
+
+    # Since someone could theoretically have access to the same submission in 2
+    # ways we want to check we don't add something twice
+    already_listed_oids = set()
+
+    # Start with the submissions they own or from any user which shares with them
+    for s in submission_collection.find({"owner":{"$in":shared_emails}}):
+        # Fix the object id to be text so we can serialise it
+        s = sanitise_submission(s)
+        if s["_id"] in already_listed_oids:
+            continue
+
+        already_listed_oids.add(s["_id"])
+        found_submissions.append(s)
+
+
+    # Now the ones specifically shared with them
+    for s in submission_collection.find({"shared_accounts":email}):
+        # Fix the object id to be text so we can serialise it
+        s = sanitise_submission(s)
+        if s["_id"] in already_listed_oids:
+            continue
+
+        already_listed_oids.add(s["_id"])
+        found_submissions.append(s)
+
+
+
+    return found_submissions
+    
+def sanitise_submission(s):
+    # Fixes a BSON submission so that it can be JSON encoded
+
+    # Change the object ID to be a string
+    s["_id"] = str(s["_id"])
+
+    # Change the date to be a string
+    s["date_submitted"] = str(s["date_submitted"].date())
+
+    return s
+
+
+
 def parse_submission(file, email):
     """
     file: stream of the xlsx sample sheet

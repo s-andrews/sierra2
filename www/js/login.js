@@ -20,16 +20,11 @@ $( document ).ready(function() {
 
 function show_login() {
 
-    // TODO: Check to see if there's a valid session ID
-    // we can use
-    console.log("Checking for existing login")
+    // Check to see if there's a valid session ID we can use
 
     session_id = Cookies.get("sierra_session_id")
     if (session_id) {
         // Validate the ID
-
-        console.log("Found "+session_id)
-
         $.ajax(
             {
                 url: backend,
@@ -48,7 +43,8 @@ function show_login() {
                     var realname = sections[0]
                     $("#maincontent").show()
     
-                    // TODO: Get their list of submissions
+                    // Get their list of submissions
+                    populate_submissions(undefined)
                 },
                 error: function(message) {
                     console.log("Existing session didn't validate")
@@ -108,7 +104,8 @@ function process_login() {
                 $("#logindiv").modal("hide")
                 $("#maincontent").show()
 
-                // TODO: Get their list of submissions
+                // Get their list of submissions
+                populate_submissions(undefined)
             },
             error: function(message) {
                 $("#loginerror").html("Login Failed")
@@ -180,6 +177,4 @@ function create_account() {
             }
         }
     )
-
-
 }

@@ -43,7 +43,35 @@ def dispatch_action(action,form):
         download_sample_sheet(form["type"].value)
     elif action == "new_submission":
         process_new_submission(form)
+    elif action == "list_submissions":
+        list_submissions(form["session"].value)
 
+
+def list_submissions(session):
+    # We can find their email from the session
+    person = people.find_one({"sessioncode": session})
+
+    if person is None:
+        send_error("Couldn't find session token")
+
+    email = person["email"]
+
+    # We also need to know the emails of anyone else who has
+    # shared all of their samples with this person
+
+    shared_emails = []
+
+    for p in people.find({"delegates_rw":email}):
+        shared_emails.append(p["email"])
+
+    for p in people.find({"delegates_ro":email}):
+        shared_emails.append(p["email"])
+
+
+    submission_data = submission.list_submissions(email,shared_emails,submissions)
+
+    print("Content-type: text/json\n")
+    print(json.dumps(submission_data))
 
 def process_new_submission(form):
     # We should be sent their session token
