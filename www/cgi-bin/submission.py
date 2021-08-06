@@ -104,6 +104,8 @@ def parse_submission(file, email):
 def parse_pre_mixed(sheet, email):
     """ Parses a submission of pre-mixed libraries """
     
+    name = estrip(sheet["B7"].value)
+
     run_type = estrip(sheet["B4"].value)
 
     if not run_type in configuration.run_type_names():
@@ -117,7 +119,7 @@ def parse_pre_mixed(sheet, email):
     # We can make the base structure into which we're going to add
     # the appropriate details
 
-    submission = create_base_submission(email,"Pre-mixed library")
+    submission = create_base_submission(email,name,"Pre-mixed library")
 
     # Now we can go through adding the samples and libraries to 
     # the structure.  We start on row 9 and keep going until we
@@ -158,8 +160,9 @@ def parse_pre_mixed(sheet, email):
     return submission
 
 
-def create_base_submission (email, library_prep_type):
+def create_base_submission (email, name, library_prep_type):
     return {
+        "name": name,
         "date_submitted": datetime.now(),
         "owner": email,
         "status": "Awaiting Samples",

@@ -46,10 +46,70 @@ function populate_submissions (data) {
     }
 
     // We're putting out the new submissions
+
+    // Clear the existing submissions
+    $("#submissions").html("")
+
+    // Put up a message if there are no submssions
+    if (data.length == 0) {
+        $("#submissions").html("<div class=\"text-center mt-4\"><h5>No submissions to show</h5></div>")
+    }
+
     console.log("Adding "+data.length+"submissions to page")
 
-    //TODO: Add submissions
 
+    for (let s in data) {
+        let thisSub = data[s]
+
+        let sub_html = `
+        <div class="card mb-2 mt-2 mx-5">
+        <div class="card-body">
+            <h4 class="card-title">${thisSub.name} <span class="float-end">${thisSub.status}</span></h4>
+            <h6 class="card-title ms-2">Details <a href="#" class="showsubmissiondetails">Show></a></h6>
+            <ul class="submissiondetails">
+                <li>Submitted by: ${thisSub.owner}</li>
+                <li>Submission date: ${thisSub.date_submitted}</li>
+                <li>Submission type: ${thisSub.library_prep_type}</li>
+            </ul>
+            <h6 class="card-title ms-2">BioSamples <span class="badge bg-secondary">5</span> <a href="#" class="showbiosamples">Show></a></h6>
+            <div class="biosamples">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `
+        for (let i in thisSub.samples) {
+            sub_html += `
+            <tr>
+                <td>${i}</td>
+                <td>${thisSub.samples[i].name}</td>
+                <td>${thisSub.samples[i].status}</td>
+                <td>Waiting</td>
+            </tr>
+            `
+        }
+
+        sub_html += `
+                </tbody>
+            </table>
+            </div>
+            <div class="submissionbuttons float-end">
+            <button type="button" class="btn btn-sm btn-primary">Edit</button>                  
+            <button type="button" class="btn btn-sm btn-primary">Results</button>
+            </div>
+        </div>
+        </div>
+        `
+        $("#submissions").append(sub_html)
+
+    }
+    
     // We need to enable events on the newly added submissions
     set_up_submissions()
 }
@@ -83,8 +143,8 @@ function upload_sample_sheet() {
             data: data,
             success: function(new_id) {
                 console.log("Inserted new submission "+new_id)
-                // TODO: Update the list of submissions
                 $("#newsubmissiondiv").modal("hide")
+                populate_submissions(undefined)
             },
             error: function(message) {
                 $("#samplesheeterror").html(message)
