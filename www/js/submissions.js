@@ -55,8 +55,13 @@ function populate_submissions (data) {
         $("#submissions").html("<div class=\"text-center mt-4\"><h5>No submissions to show</h5></div>")
     }
 
-    console.log("Adding "+data.length+"submissions to page")
-
+    // We need some mappings for CSS classes for different types of QC status
+    let css_qc_classes = {
+        "Complete": "bg-success text-light p-1 m-0 rounded",
+        "Passed QC": "bg-success text-light p-1 m-0 rounded",
+        "Awaiting QC": "bg-warning text-light p-1 m-0 rounded",
+        "Awaiting Samples": "bg-warning text-light p-1 m-0 rounded"
+    }
 
     for (let s in data) {
         let thisSub = data[s]
@@ -64,48 +69,40 @@ function populate_submissions (data) {
         let sub_html = `
         <div class="card mb-2 mt-2 mx-5">
         <div class="card-body">
-            <h4 class="card-title">${thisSub.name} <span class="float-end">${thisSub.status}</span></h4>
+            <h4 class="card-title">${thisSub.name} <span class="float-end ${css_qc_classes[thisSub.status]}">${thisSub.status}</span></h4>
             <h6 class="card-title ms-2">Details <a href="#" class="showsubmissiondetails">Show></a></h6>
             <ul class="submissiondetails">
-                <li>Submitted by: ${thisSub.owner}</li>
-                <li>Submission date: ${thisSub.date_submitted}</li>
-                <li>Submission type: ${thisSub.library_prep_type}</li>
+                <li><strong>Submitted by:</strong> ${thisSub.owner}</li>
+                <li><strong>Submission date:</strong> ${thisSub.date_submitted}</li>
+                <li><strong>Submission type:</strong> ${thisSub.library_prep_type}</li>
+                <li><strong>Shared with:</strong> ${thisSub.shared_accounts}</li>
             </ul>
             <h6 class="card-title ms-2">BioSamples <span class="badge bg-secondary">5</span> <a href="#" class="showbiosamples">Show></a></h6>
             <div class="biosamples">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Results</th>
-                    </tr>
-                </thead>
-                <tbody>
         `
         for (let i in thisSub.samples) {
             sub_html += `
-            <tr>
-                <td>${i}</td>
-                <td>${thisSub.samples[i].name}</td>
-                <td>${thisSub.samples[i].status}</td>
-                <td>Waiting</td>
-            </tr>
+            <div class="biosample ms-5">
+            <h6 class="text-light bg-secondary p-2 pb-3 mb-0 mt-1 rounded">BioSample ${i+1}: <strong>${thisSub.samples[i].name}</strong><span class="float-end ${css_qc_classes[thisSub.samples[i].status]}">${thisSub.samples[i].status}</span></h6>
             `
+            for (let j in thisSub.samples[i].libraries) {
+                sub_html += `<h6 class="p-2">Library ${j+1}: ${thisSub.samples[i].libraries[j].type} (${thisSub.samples[i].libraries[j].barcode})<span class="float-end ${css_qc_classes[thisSub.samples[i].libraries[j].status]}">${thisSub.samples[i].libraries[j].status}</span></h6>
+                            </div>
+                `
+            }
         }
-
+        
         sub_html += `
-                </tbody>
-            </table>
             </div>
             <div class="submissionbuttons float-end">
+            <button type="button" class="btn btn-sm btn-primary">Share</button>
             <button type="button" class="btn btn-sm btn-primary">Edit</button>                  
             <button type="button" class="btn btn-sm btn-primary">Results</button>
             </div>
         </div>
         </div>
         `
+
         $("#submissions").append(sub_html)
 
     }
