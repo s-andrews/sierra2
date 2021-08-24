@@ -2,6 +2,7 @@ $( document ).ready(function() {
 
     $(".showhide").click(showhide)
     $(".mixdetails").click(mixdetails)
+    $(".filter-enable").click(showfilter)
 
 
 });
@@ -16,4 +17,9 @@ function showhide () {
 
 function mixdetails() {
     $(this).closest("tr").nextAll("tr").first().toggle()
+}
+
+function showfilter() {
+    // Shows the filter options when a filter button is clicked
+    $(this).next("div").toggle()
 }

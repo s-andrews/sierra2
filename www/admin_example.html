@@ -70,7 +70,65 @@
         <div id="biosamples" class="container-fluid">
           <h2>BioSamples</h2><p class="showhide">Show/Hide</p>
           <div class="collapse" id="biosample_filters">
-            <button type="button" class="btn btn-primary">Filter BioSamples</button>
+            <button type="button" class="btn btn-primary filter-enable">Filter BioSamples</button>
+            <div id="biosample_filter_options" class="collapse filter-options">
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_name">ID</label>
+                <div class="col-sm-10">
+                  <input type="text" id="biosample_id" class="form-control" placeholder="eg 1234-1">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_status_select">Status</label>
+                <div class="col-sm-10">
+                  <select id="biosample_status_select" class="form-control">
+                    <option>Any</option>
+                    <option>Awaiting Delivery</option>
+                    <option>Awaiting QC</option>
+                    <option>QC Failed</option>
+                    <option>QC Passed</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_owner">Owner</label>
+                <div class="col-sm-10">
+                  <input type="text" id="biosample_owner" class="form-control" placeholder="Anyone">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_name">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" id="biosample_name" class="form-control" placeholder="eg WT-1">
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_date_select">Date</label>
+                <div class="col-sm-3">
+                  <select id="biosample_date_select" class="form-control">
+                    <option>Submitted</option>
+                    <option>Received</option>
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <select id="biosample_date_before_after" class="form-control">
+                    <option>After</option>
+                    <option>Before</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <input type="date" id="biosample_date_text" class="form-control">
+                </div>  
+              </div>
+
+              <button type="button" class="btn btn-primary">Update</button>
+            </div>
           </div>
 
           <table id="biosample_table" class="table collapse">

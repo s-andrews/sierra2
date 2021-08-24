@@ -27,3 +27,14 @@
     display: none;
 }
 
+
+
+/* Filters */
+.form-control {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.filter-options {
+    max-width: 600px;
+}
