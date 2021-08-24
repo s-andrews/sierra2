@@ -7,6 +7,10 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Bootstrap-Select CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" rel="stylesheet">
+
     <link href="css/sierra.css" rel="stylesheet">
 
     <title>Sierra Sequencing LIMS</title>
@@ -70,6 +74,12 @@
         <div id="biosamples" class="container-fluid">
           <h2>BioSamples</h2><p class="showhide">Show/Hide</p>
           <div class="collapse" id="biosample_filters">
+            <select class="selectpicker" multiple>
+              <option>Cell Number</option>
+              <option>Viability (%)</option>
+              <option>cDNA Conc (ng/ul)</option>
+              <option>cDNA Length</option>
+            </select>
             <button type="button" class="btn btn-primary filter-enable">Filter BioSamples</button>
 
             <!-- Filter Options -->
@@ -251,7 +261,7 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="library_type">Owner</label>
+                <label class="col-sm-2 col-form-label" for="library_type">Type</label>
                 <div class="col-sm-10">
                   <select id="library_type" class="form-control">
                     <option>Any</option>
@@ -272,7 +282,7 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="library_barcode">Name</label>
+                <label class="col-sm-2 col-form-label" for="library_barcode">Barcode</label>
                 <div class="col-sm-10">
                   <input type="text" id="library_barcode" class="form-control" placeholder="eg GGATCT">
                 </div>
@@ -340,6 +350,7 @@
               </tbody>
             </table>
             <div class="float-end">
+              <button role="button" class="btn btn-primary">Add to Mix</button>
               <button role="button" class="btn btn-primary">Edit</button>
             </div>
           </div>
@@ -349,62 +360,227 @@
         <div id="mixedlibraries" class="container-fluid">
           <h2>Mixed Libraries</h2><p class="showhide">Show/Hide</p>
           <div id="mixlibrary_filters" class="collapse">
-            <button type="button" class="btn btn-primary">Filter Mixed Libraries</button>
+            <button type="button" class="btn btn-primary filter-enable">Filter Mixed Libraries</button>
+
+            <!-- Filter Options -->
+            <div id="mixed_filter_options" class="collapse filter-options">
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="mixed_id">ID</label>
+                <div class="col-sm-10">
+                  <input type="text" id="mixed_id" class="form-control" placeholder="eg ML0001">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="mixed_status_select">Status</label>
+                <div class="col-sm-10">
+                  <select id="mixed_status_select" class="form-control">
+                    <option>Any</option>
+                    <option>Awaiting QC</option>
+                    <option>QC Failed</option>
+                    <option>QC Passed</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="mixed_type">Run Type</label>
+                <div class="col-sm-10">
+                  <select id="mixed_type" class="form-control">
+                    <option>Any</option>
+                    <option>HiSeq 100bp PE</option>
+                    <option>MiSeq 150bp PE</option>
+                    <option>NovaSeq 150bp PE</option>
+                    <option>NextSeq 50bp SE</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary float-end">Update</button>
+            </div>            
+            
           </div>
 
-          <table id="mixlibrary_table" class="table collapse">
-            <thead>
-              <tr>
-                <th scope="col">Select</th>
-                <th scope="col">ID</th>
-                <th scope="col">RunType</th>
-                <th scope="col">Status</th>
-                <th scope="col">Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>ML0001</th>
-                <td>NovaSeq 100bp PE</td>
-                <td>Awaiting QC</td>
-                <td><button role="button" class="btn btn-sm btn-primary mixdetails">Details</button></td>
-              </tr>
-              <tr class="collapse">
-                <td></td>
-                <td colspan="4">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">LibraryID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Barcode</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>4645-2-1</th>
-                        <td>WT-1</td>
-                        <td>CGTAC</td>
-                      </tr>
-                      <tr>
-                        <td>4645-3-1</th>
-                        <td>WT-2</td>
-                        <td>GGATC</td>
-                      </tr>
-                      <tr>
-                        <td>4645-4-1</th>
-                        <td>WT-3</td>
-                        <td>AATCA</td>
-                      </tr>
-                    </tbody>
-                  </table>
+          <div class="collapse">
+            <table id="mixlibrary_table" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Select</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">RunType</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>ML0001</th>
+                  <td>NovaSeq 100bp PE</td>
+                  <td>Awaiting QC</td>
+                  <td><button role="button" class="btn btn-sm btn-primary btn-details">Details</button></td>
+                </tr>
+                <tr class="collapse">
+                  <td></td>
+                  <td colspan="4">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Select</th>
+                          <th scope="col">LibraryID</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Barcode</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input type="checkbox"></td>
+                          <td>4645-2-1</th>
+                          <td>WT-1</td>
+                          <td>CGTAC</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox"></td>
+                          <td>4645-3-1</th>
+                          <td>WT-2</td>
+                          <td>GGATC</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox"></td>
+                          <td>4645-4-1</th>
+                          <td>WT-3</td>
+                          <td>AATCA</td>
+                        </tr>
+                      </tbody>
+                    </table>
 
 
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="float-end">
+              <button role="button" class="btn btn-primary">Add to Run</button>
+              <button role="button" class="btn btn-primary">New</button>
+            </div>
+
+          </div>
+        </div> <!-- End Mixed Libraries-->
+
+
+        <!-- Sequencing Runs -->
+        <div id="seqruns" class="container-fluid">
+          <h2>Sequencing Runs</h2><p class="showhide">Show/Hide</p>
+          <div id="seqrun_filters" class="collapse">
+            <button type="button" class="btn btn-primary filter-enable">Filter Seq Runs</button>
+
+            <!-- Filter Options -->
+            <div id="seqrun_filter_options" class="collapse filter-options">
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="seqrun_id">ID</label>
+                <div class="col-sm-10">
+                  <input type="text" id="seqrun_id" class="form-control" placeholder="eg SR0001">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="seqrun_status_select">Status</label>
+                <div class="col-sm-10">
+                  <select id="seqrun_status_select" class="form-control">
+                    <option>Pending</option>
+                    <option>Complete</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="seqrun_type">Run Type</label>
+                <div class="col-sm-10">
+                  <select id="seqrun_type" class="form-control">
+                    <option>Any</option>
+                    <option>HiSeq 100bp PE</option>
+                    <option>MiSeq 150bp PE</option>
+                    <option>NovaSeq 150bp PE</option>
+                    <option>NextSeq 50bp SE</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="seqrun_provider">Run On</label>
+                <div class="col-sm-10">
+                  <select id="seqrun_provider" class="form-control">
+                    <option>Any</option>
+                    <option>CRUK</option>
+                    <option>NovaGene</option>
+                    <option>BI MiSeq</option>
+                    <option>BI NextSeq</option>
+                    <option>BI HiSeq 2500</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary float-end">Update</button>
+            </div>            
+            
+          </div>
+
+          <div class="collapse">
+            <table id="seqrun_table" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Select</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">RunType</th>
+                  <th scope="col">Run On</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>SR0001</th>
+                  <td>NextSeq 100bp PE</td>
+                  <td>BI NextSeq</td>
+                  <td>Complete</td>
+                  <td>2021-08-24</td>
+                  <td><button role="button" class="btn btn-sm btn-primary btn-details">Details</button></td>
+                </tr>
+                <tr class="collapse">
+                  <td></td>
+                  <td colspan="4">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Mix ID</th>
+                          <th scope="col">Barcodes</th>
+                          <th scope="col">Lane</th>
+                          <th scope="col">External ID</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>ML001</th>
+                          <td>6</th>
+                          <td>1</td>
+                          <td>NA</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="float-end">
+              <button role="button" class="btn btn-primary">New</button>
+              <button role="button" class="btn btn-primary">Edit</button>
+            </div>
+
+          </div>
         </div> <!-- End Mixed Libraries-->
 
 
@@ -425,6 +601,9 @@
 
     <!-- JSCookie -->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script>
+
+    <!-- Bootstrap-select used for picking columns -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
 
     <!-- Our custom JS -->
     <script src="js/sierra.js"></script>

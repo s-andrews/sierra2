@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 
     $(".showhide").click(showhide)
-    $(".mixdetails").click(mixdetails)
+    $(".btn-details").click(btndetails)
     $(".filter-enable").click(showfilter)
 
 
@@ -15,7 +15,7 @@ function showhide () {
     $(this).next("div").next("div").toggle()
 }
 
-function mixdetails() {
+function btndetails() {
     $(this).closest("tr").nextAll("tr").first().toggle()
 }
 
