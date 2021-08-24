@@ -38,3 +38,7 @@
 .filter-options {
     max-width: 600px;
 }
+
+.showhide {
+    cursor: pointer;
+}

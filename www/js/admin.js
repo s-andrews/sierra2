@@ -12,7 +12,7 @@ $( document ).ready(function() {
 function showhide () {
     // Shows or Hides the section clicked on
     $(this).next("div").toggle()
-    $(this).next("div").next("table").toggle()
+    $(this).next("div").next("div").toggle()
 }
 
 function mixdetails() {

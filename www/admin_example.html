@@ -71,6 +71,8 @@
           <h2>BioSamples</h2><p class="showhide">Show/Hide</p>
           <div class="collapse" id="biosample_filters">
             <button type="button" class="btn btn-primary filter-enable">Filter BioSamples</button>
+
+            <!-- Filter Options -->
             <div id="biosample_filter_options" class="collapse filter-options">
 
               <div class="form-group row">
@@ -101,6 +103,20 @@
               </div>
 
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="biosample_prep">Owner</label>
+                <div class="col-sm-10">
+                  <select id="biosample_prep" class="form-control">
+                    <option>Any</option>
+                    <option>Pre-mixed library</option>
+                    <option>Directional RNA-Seq</option>
+                    <option>10X RNA</option>
+                    <option>10X VDJ</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="biosample_name">Name</label>
                 <div class="col-sm-10">
                   <input type="text" id="biosample_name" class="form-control" placeholder="eg WT-1">
@@ -127,66 +143,73 @@
                 </div>  
               </div>
 
-              <button type="button" class="btn btn-primary">Update</button>
+              <button type="button" class="btn btn-primary float-end">Update</button>
             </div>
           </div>
 
-          <table id="biosample_table" class="table collapse">
-            <thead>
-              <tr>
-                <th scope="col">Select</th>
-                <th scope="col">ID</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Prep</th>
-                <th scope="col">Status</th>
-                <th scope="col">Name</th>
-                <th scope="col">Submitted</th>
-                <th scope="col">Recevied</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-1</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Awaiting QC</td>
-                <td>WT-1</td>
-                <td>2021-08-02</td>
-                <td>2021-08-05</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-2</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Awaiting QC</td>
-                <td>WT-2</td>
-                <td>2021-08-02</td>
-                <td>2021-08-05</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-3</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Awaiting QC</td>
-                <td>KO-1</td>
-                <td>2021-08-02</td>
-                <td>2021-08-05</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-4</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Awaiting QC</td>
-                <td>KO-2</td>
-                <td>2021-08-02</td>
-                <td>2021-08-05</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="collapse">
+            <table id="biosample_table" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Select</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Prep</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Submitted</th>
+                  <th scope="col">Recevied</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-1</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Awaiting QC</td>
+                  <td>WT-1</td>
+                  <td>2021-08-02</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-2</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Awaiting QC</td>
+                  <td>WT-2</td>
+                  <td>2021-08-02</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-3</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Awaiting QC</td>
+                  <td>KO-1</td>
+                  <td>2021-08-02</td>
+                  <td>2021-08-05</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-4</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Awaiting QC</td>
+                  <td>KO-2</td>
+                  <td>2021-08-02</td>
+                  <td>2021-08-05</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="float-end">
+              <button role="button" class="btn btn-primary">Edit</button>
+              <button role="button" class="btn btn-primary">Create Libraries</button>
+            </div>
+          </div>
         </div> <!-- End Biosamples-->
 
 
@@ -195,65 +218,131 @@
           <h2>Libraries</h2><p class="showhide">Show/Hide</p>
 
           <div id="library_filters" class="collapse">
-            <button type="button" class="btn btn-primary">Filter Libraries</button>
+            <button type="button" class="btn btn-primary filter-enable">Filter Libraries</button>
+
+            <!-- Filter Options -->
+            <div id="library_filter_options" class="collapse filter-options">
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_id">ID</label>
+                <div class="col-sm-10">
+                  <input type="text" id="library_id" class="form-control" placeholder="eg 1234-1-1">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_status_select">Status</label>
+                <div class="col-sm-10">
+                  <select id="library_status_select" class="form-control">
+                    <option>Any</option>
+                    <option>Not Made</option>
+                    <option>Awaiting QC</option>
+                    <option>QC Failed</option>
+                    <option>QC Passed</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_owner">Owner</label>
+                <div class="col-sm-10">
+                  <input type="text" id="library_owner" class="form-control" placeholder="Anyone">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_type">Owner</label>
+                <div class="col-sm-10">
+                  <select id="library_type" class="form-control">
+                    <option>Any</option>
+                    <option>RNA-Seq</option>
+                    <option>ChIP-Seq</option>
+                    <option>BS-Seq</option>
+                    <option>10X RNA</option>
+                    <option>10X VDJ</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_name">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" id="library_name" class="form-control" placeholder="eg WT-1">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="library_barcode">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" id="library_barcode" class="form-control" placeholder="eg GGATCT">
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary float-end">Update</button>
+            </div>            
           </div>
 
-          <table id="library_table" class="table collapse">
-            <thead>
-              <tr>
-                <th scope="col">Select</th>
-                <th scope="col">ID</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Name</th>
-                <th scope="col">Barcode</th>
-                <th scope="col">RunType</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-1-1</th>
-                <td>Martin Turner</td>
-                <td>RNA-Seq</td>
-                <td>Not Made</td>
-                <td>WT-1</td>
-                <td>GGATC</td>
-                <td>NovaSeq 100bp PE</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-2-1</th>
-                <td>Martin Turner</td>
-                <td>RNA-Seq</td>
-                <td>Not Made</td>
-                <td>WT-2</td>
-                <td>GTATA</td>
-                <td>NovaSeq 100bp PE</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-3-1</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Not Made</td>
-                <td>KO-1</td>
-                <td>TCGTA</td>
-                <td>NovaSeq 100bp PE</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></td>
-                <td>4645-4-1</th>
-                <td>Martin Turner</td>
-                <td>Directional RNA-Seq</td>
-                <td>Not Made</td>
-                <td>KO-2</td>
-                <td>ATCAA</td>
-                <td>NovaSeq 100bp PE</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="collapse">
+            <table id="library_table" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Select</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Barcode</th>
+                  <th scope="col">RunType</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-1-1</th>
+                  <td>Martin Turner</td>
+                  <td>RNA-Seq</td>
+                  <td>Not Made</td>
+                  <td>WT-1</td>
+                  <td>GGATC</td>
+                  <td>NovaSeq 100bp PE</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-2-1</th>
+                  <td>Martin Turner</td>
+                  <td>RNA-Seq</td>
+                  <td>Not Made</td>
+                  <td>WT-2</td>
+                  <td>GTATA</td>
+                  <td>NovaSeq 100bp PE</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-3-1</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Not Made</td>
+                  <td>KO-1</td>
+                  <td>TCGTA</td>
+                  <td>NovaSeq 100bp PE</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>4645-4-1</th>
+                  <td>Martin Turner</td>
+                  <td>Directional RNA-Seq</td>
+                  <td>Not Made</td>
+                  <td>KO-2</td>
+                  <td>ATCAA</td>
+                  <td>NovaSeq 100bp PE</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="float-end">
+              <button role="button" class="btn btn-primary">Edit</button>
+            </div>
+          </div>
         </div> <!-- End Libraries-->
         
         <!-- Mixed Libraries -->
